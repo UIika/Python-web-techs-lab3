@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <header>
+        <div><label id="clock"></label></div>
+        <h1>Телепрограма ІО-14 Риндя Ілля</h1>
+    </header>
+    <main>
+        <br>
+        <div class="day-selector">
+            <a href="/?weekday=Monday" class="day-link active">Понеділок</a>
+            <a href="/?weekday=Tuesday" class="day-link">Вівторок</a>
+            <a href="/?weekday=Wednesday" class="day-link">Середа</a>
+            <a href="/?weekday=Thursday" class="day-link">Четвер</a>
+            <a href="/?weekday=Friday" class="day-link">П'ятниця</a>
+            <a href="/?weekday=Saturday" class="day-link">Субота</a>
+            <a href="/?weekday=Sunday" class="day-link">Неділя</a>
+        </div>
+
+        <section id="channels">
+            <div class="channel-grid">
+                {% for channel in channels %}
+                <div class="channel">
+                    <h3>{{channel.title}}</h3>
+                    <table>
+                        <tbody>
+                            {% for program in channel.programs %}
+                            {% if program.weekday==weekday %}
+                                <tr>
+                                    <td>{{program.start_time}}</td>
+                                    <td>{{program.title}}</td>
+                                </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endfor %}
+                
+                
+    </main>
+
+{% endblock content %}

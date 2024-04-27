@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Телепрограма</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css' ) }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+</head>
+
+<body>
+    <!-- <nav class="flex justify-between text-3xl my-3 text-gray-700">
+        <ul class="flex ml-10">
+            <li><a href="/">Home</a></li>
+        </ul>
+        <ul class="flex gap-5 mr-10">
+            <li><a href="/register">Sign up</a></li>|<li><a href="/login">Log in</a></li>
+        </ul>
+    </nav> -->
+    <div>
+        {% block content %}{% endblock content %}
+    </div>
+    <script>
+
+        var clockElement = document.getElementById( "clock" );
+
+        function updateClock(clock){
+            clock.innerHTML = new Date().toLocaleDateString('uk-UA', {
+                weekday:"long",
+                year:"numeric",
+                month:"short",
+                day:"numeric",
+                hour:"numeric",
+                minute:"numeric",
+                second:"numeric"});
+        }
+        updateClock(clock)
+
+        setInterval(function(){
+            updateClock(clockElement);
+        },1000);
+
+    </script>
+</body>
+
+</html>
