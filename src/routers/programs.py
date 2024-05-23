@@ -1,4 +1,5 @@
 from bson import ObjectId
+from bson.errors import InvalidId
 from fastapi import HTTPException
 from src.schemas import CreateProgramSchema
 from .common import BaseRouter
@@ -34,6 +35,19 @@ class ProgramRouter(BaseRouter):
         return self.list_serialize(
             self.db_collection.find({'channel_id': channel_id}).sort("start_time", 1)
         )
+        
+    def update(self, id: str, program: CreateProgramSchema, is_superuser: is_superuser):
+        try:
+            channel = DB.channels.find_one({'_id': ObjectId(program.channel_id)})
+        except AttributeError:
+            channel = None
+        except InvalidId:
+            raise HTTPException(detail='Wrong id format', status_code=400)
+        if hasattr(program, 'channel_id') and not channel:
+            raise HTTPException(detail="Channel with such id does not exist", status_code=400)
+        if hasattr(program, 'start_time'):
+            program.start_time = program.start_time.strftime('%H:%M')
+        return super().update(id, program, is_superuser)
     
 
 programs_router = ProgramRouter(prefix='/programs', tags=['Programs'])

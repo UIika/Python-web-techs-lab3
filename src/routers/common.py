@@ -70,7 +70,7 @@ class BaseRouter(APIRouter, ABC):
     def patch(self, id: str, model: dict, is_superuser: is_superuser):
         if not is_superuser:
             raise HTTPException(status_code=403, detail='You are not an admin')
-        return self.update(id, model)
+        return self.update(id, model, is_superuser)
             
     def delete(self, id, is_superuser: is_superuser):
         if not is_superuser:

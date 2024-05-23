@@ -44,7 +44,8 @@ class UserRouter(BaseRouter):
         }
     
     def update(self, id: str, user: CreateUserSchema, is_superuser: is_superuser):
-        user.password = bcrypt_context.hash(user.password)
+        if hasattr(user, 'password'):
+            user.password = bcrypt_context.hash(user.password)
         return super().update(id, user, is_superuser)
     
     def login(self, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):

@@ -19,5 +19,7 @@ class ChannelRouter(BaseRouter):
     def create(self, program: CreateChannelSchema, is_superuser: is_superuser):
         return super().create(program, is_superuser)
     
-    
+    def update(self, id: str, channel: CreateChannelSchema, is_superuser: is_superuser):
+        return super().update(id, channel, is_superuser)
+
 channels_router = ChannelRouter(prefix='/channels', tags=['Channels'])
